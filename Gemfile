@@ -35,6 +35,8 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem 'sqlite3' # 追加
+  gem 'dotenv-rails' # 追加
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
@@ -46,8 +48,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'sqlite3' # 追加
-  gem 'dotenv-rails' # 追加
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
