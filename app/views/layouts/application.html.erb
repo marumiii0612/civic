@@ -10,11 +10,11 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
 
-  <body>
-    <header>
-      <div class="title">
-        <div class="icon_img">
-          <%= link_to root_path, class: "title-link-img", aria_label: "トップへ" do %>
+  <body id="top" class="has-fixed-header">
+  <header class="site-header" role="banner">
+    <div class="title">
+      <div class="icon_img">
+        <%= link_to root_path, class: "title-link-img", aria_label: "トップへ" do %>
           <%= image_tag "icon.png", alt: "CivicLink アイコン" %>
         <% end %>
       </div>
@@ -22,42 +22,41 @@
         <%= link_to raw("CivicLink <br> Chigasaki"), root_path, class: "title-link" %>
       </h1>
       <h2>関心を、参加へ。<br> 参加を、つながりへ。</h2>
+    </div>
+
+    <!-- ハンバーガー（右上固定） -->
+    <button class="hamburger" aria-label="メニュー" aria-controls="global-nav" aria-expanded="false" onclick="toggleMenu()">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <!-- オーバーレイで重ねるナビ -->
+    <nav id="global-nav" class="header-list" aria-hidden="true">
+      <ul>
+        <li><%= link_to "トップページ", root_path, class: "link" %></li>
+        <li><%= link_to "CivicLinkとは", about_statics_path, class: "link" %></li>
+        <li><%= link_to "市民自治とは", civic_statics_path, class: "link" %></li>
+        <li><%= link_to "まちまっち（市民団体マッチング）", new_association_path, class: "link" %></li>
+        <li><%= link_to "課題コンパス（市民団体検索）", groupall_statics_path, class: "link" %></li>
+        <li><%= link_to "しみんGO（イベントリスト）", tweets_eventall_path, class: "link" %></li>
+        <li><%= link_to "市民団体ログイン", tweets_path %></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <%= image_tag "icon.png", alt: "", class: "footer-logo" %>
+        <div>
+          <strong class="footer-title">CivicLink Chigasaki</strong>
+          <p class="footer-tagline">関心を、参加へ。参加を、つながりへ。</p>
+        </div>
       </div>
 
-      <!-- ハンバーガー（右端・縦中央に固定） -->
-      <button class="hamburger" aria-label="メニュー" aria-controls="global-nav" aria-expanded="false" onclick="toggleMenu()">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-
-      <nav id="global-nav" class="header-list" aria-hidden="true">
-        <ul>
-          <li><%= link_to "トップページ", root_path, class: "link" %></li>
-          <li><%= link_to "CivicLinkとは", about_statics_path, class: "link" %></li>
-          <li><%= link_to "市民自治とは", civic_statics_path, class: "link" %></li>
-          <li><%= link_to "まちまっち（市民団体マッチング）", new_association_path, class: "link" %></li>
-          <li><%= link_to "課題コンパス（市民団体検索）", groupall_statics_path, class: "link" %></li>
-          <li><%= link_to "しみんGO（イベントリスト）", tweets_eventall_path, class: "link" %></li>
-          <li><%= link_to "市民団体ログイン", tweets_path %></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main>
-      <%= yield %>
-    </main>
-
-    <footer>
-      <footer class="site-footer" role="contentinfo">
-        <div class="container footer-main">
-          <div class="footer-brand">
-            <%= image_tag "icon.png", alt: "", class: "footer-logo" %>
-          <div>
-          <strong class="footer-title">CivicLink Chigasaki</strong>
-            <p class="footer-tagline">関心を、参加へ。参加を、つながりへ。</p>
-          </div>
-        </div>
       <nav class="footer-nav" aria-label="フッターナビ">
         <ul>
           <li><%= link_to "トップページ", root_path %></li>
@@ -69,12 +68,15 @@
           <li><%= link_to "市民団体ログイン", tweets_path %></li>
         </ul>
       </nav>
+
       <div class="footer-sub">
         <p>© <%= Time.current.year %> MARUYAMA Mizuki</p>
-      <ul class="legal">
-        <li><a class="to-top" href="#top" aria-label="ページ先頭へ">ページ上部へ</a></li>
-      </ul>
+        <ul class="legal">
+          <li><a class="to-top" href="#top" aria-label="ページ先頭へ">ページ上部へ</a></li>
+        </ul>
       </div>
-    </footer>
-  </body>
+    </div>
+  </footer>
+</body>
+
 </html>

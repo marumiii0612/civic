@@ -1,16 +1,25 @@
 * { margin: 0; padding: 0; }
-body {
+
+:root{
+  --header-h: 88px; /* ヘッダーの見た目高さに合わせて調整 */
+}
+
+body{
   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+  padding-top: var(--header-h);
 }
 
 /* ===== Header & Hamburger ===== */
 header{
-  position: relative;
+  position: fixed;      /* ← relative から fixed に */
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);      /* 明示的に高さを固定 */
   padding: 10px 72px 10px 10px; /* 右にボタン幅(60px)+余白 */
   display: flex;
   align-items: center;
   gap: 12px;
   background: #DDEAF6;
+  z-index: 1000;        /* コンテンツより上に */
 }
 
 header .title a.title-link,
@@ -59,7 +68,7 @@ header h2{ font-size: 15px; margin-left: 0; color:#003366; }
   gap: 10px;
 
   overflow: visible;   /* 回転時のはみ出しを許容 */
-  z-index: 1001;
+  z-index: 1100;
 }
 
 /* 三本線 */
@@ -83,7 +92,7 @@ header h2{ font-size: 15px; margin-left: 0; color:#003366; }
 /* ===== Dropdown Menu ===== */
 .header-list{
    position: absolute;
-   top: 88px; /* 60px(ボタン) + 10px(上padding) + 10px(下padding) + 8px(間隔) */
+   top: calc(var(--header-h) + 8px); /* ← 88px を変数で */
    right: 12px;
    min-width: 220px;
    background: #003366; color:#fff;
