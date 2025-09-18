@@ -1,26 +1,33 @@
 Rails.application.routes.draw do
-  resources :statics, only: [:index, :show, :about, :civic] do
+  root 'statics#index'
+
+  # Statics（一覧/詳細 + カスタムページ）
+  resources :statics, only: [:index, :show] do
     collection do
-      get  :upload   # /statics/upload (GET)
-      post :upload   # /statics/upload (POST)
-      get  :search
-      get  :groupall
-      get  :about
-      get  :civic
+      get  :upload   # /statics/upload (GET フォーム表示)
+      post :upload   # /statics/upload (POST 取込実行)
+      get  :search   # /statics/search
+      get  :groupall # /statics/groupall
+      get  :about    # /statics/about   => about_statics_path
+      get  :civic    # /statics/civic   => civic_statics_path
     end
   end
-  patch 'tweets/:id' => 'tweets#update'
-  delete 'tweets/:id' => 'tweets#destroy'
-  get 'tweets/:id/edit' => 'tweets#edit', as:'edit_tweet'
-  get 'tweets/eventall' => 'tweets#eventall'
-  get 'tweets/area' => 'tweets#area'
-  get 'tweets/genre' => 'tweets#genre'
-  get 'tweets/month' => 'tweets#month'
-  get 'tweets/name' => 'tweets#name'
-  get 'tweets/search' => 'tweets#search'
+
   devise_for :users
-  resources :tweets
+
+  # Tweets（標準REST + 追加の一覧系はcollectionで）
+  resources :tweets do
+    collection do
+      get :eventall
+      get :area
+      get :genre
+      get :month
+      get :name
+      get :search
+    end
+  end
+
   resources :associations
-  root 'statics#index'
   resources :maps, only: [:index]
 end
+
