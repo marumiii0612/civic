@@ -10,22 +10,24 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
 
-  <body>
-    <header>
+  <body id="top">
+    <header role="banner">
       <div class="title">
         <div class="icon_img">
           <%= link_to root_path, class: "title-link-img", aria_label: "トップへ" do %>
-          <%= image_tag "icon.png", alt: "CivicLink アイコン" %>
-        <% end %>
-      </div>
-      <h1>
-        <%= link_to raw("CivicLink <br> Chigasaki"), root_path, class: "title-link" %>
-      </h1>
-      <h2>関心を、参加へ。<br> 参加を、つながりへ。</h2>
+            <%= image_tag "icon.png", alt: "CivicLink アイコン" %>
+          <% end %>
+        </div>
+        <h1>
+          <%= link_to raw("CivicLink <br> Chigasaki"), root_path, class: "title-link" %>
+        </h1>
+        <h2>関心を、参加へ。<br> 参加を、つながりへ。</h2>
       </div>
 
-      <!-- ハンバーガー（右端・縦中央に固定） -->
-      <button class="hamburger" aria-label="メニュー" aria-controls="global-nav" aria-expanded="false" onclick="toggleMenu()">
+      <!-- ハンバーガー -->
+      <button class="hamburger" aria-label="メニュー"
+              aria-controls="global-nav" aria-expanded="false"
+              onclick="toggleMenu()">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
@@ -48,32 +50,62 @@
       <%= yield %>
     </main>
 
-      <footer class="site-footer" role="contentinfo">
-        <div class="container footer-main">
-          <div class="footer-brand">
-            <%= image_tag "icon.png", alt: "", class: "footer-logo" %>
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-main">
+        <div class="footer-brand">
+          <%= image_tag "icon.png", alt: "", class: "footer-logo" %>
           <div>
-          <strong class="footer-title">CivicLink Chigasaki</strong>
+            <strong class="footer-title">CivicLink Chigasaki</strong>
             <p class="footer-tagline">関心を、参加へ。参加を、つながりへ。</p>
           </div>
         </div>
-      <nav class="footer-nav" aria-label="フッターナビ">
-        <ul>
-          <li><%= link_to "トップページ", root_path %></li>
-          <li><%= link_to "CivicLinkとは", about_statics_path, class: "link" %></li>
-          <li><%= link_to "市民自治とは", civic_statics_path, class: "link" %></li>
-          <li><%= link_to "まちまっち（市民団体マッチング）", new_association_path %></li>
-          <li><%= link_to "課題コンパス（市民団体検索）", groupall_statics_path %></li>
-          <li><%= link_to "しみんGO（イベントリスト）", eventall_tweets_path %></li>
-          <li><%= link_to "市民団体ログイン", tweets_path %></li>
-        </ul>
-      </nav>
-      <div class="footer-sub">
-        <p>© <%= Time.current.year %> MARUYAMA Mizuki</p>
-      <ul class="legal">
-        <li><a class="to-top" href="#top" aria-label="ページ先頭へ">ページ上部へ</a></li>
-      </ul>
+        <nav class="footer-nav" aria-label="フッターナビ">
+          <ul>
+            <li><%= link_to "トップページ", root_path %></li>
+            <li><%= link_to "CivicLinkとは", about_statics_path, class: "link" %></li>
+            <li><%= link_to "市民自治とは", civic_statics_path, class: "link" %></li>
+            <li><%= link_to "まちまっち（市民団体マッチング）", new_association_path %></li>
+            <li><%= link_to "課題コンパス（市民団体検索）", groupall_statics_path %></li>
+            <li><%= link_to "しみんGO（イベントリスト）", eventall_tweets_path %></li>
+            <li><%= link_to "市民団体ログイン", tweets_path %></li>
+          </ul>
+        </nav>
+        <div class="footer-sub">
+          <p>© <%= Time.current.year %> MARUYAMA Mizuki</p>
+          <ul class="legal">
+            <li><a class="to-top" href="#top" aria-label="ページ先頭へ">ページ上部へ</a></li>
+          </ul>
+        </div>
       </div>
     </footer>
+
+    <script>
+      // ヘッダー実寸を body の padding-top に反映（被り防止）
+      function setHeaderPadding() {
+        const header = document.querySelector('header');
+        if (!header) return;
+        const h = Math.ceil(header.getBoundingClientRect().height);
+        document.body.style.paddingTop = h + 'px';
+      }
+
+      // メニュー開閉（ARIA更新・アニメ状態更新）
+      function toggleMenu(force) {
+        const nav = document.getElementById('global-nav');
+        const btn = document.querySelector('.hamburger');
+        const open = typeof force === 'boolean' ? force : !nav.classList.contains('active');
+
+        nav.classList.toggle('active', open);
+        nav.setAttribute('aria-hidden', String(!open));
+        btn.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.documentElement.classList.toggle('html-lock', open);
+      }
+
+      window.addEventListener('load', setHeaderPadding);
+      window.addEventListener('resize', setHeaderPadding);
+      window.addEventListener('keydown', e => {
+        if (e.key === 'Escape') toggleMenu(false);
+      });
+    </script>
   </body>
-</html
+</html>
