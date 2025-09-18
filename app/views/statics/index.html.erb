@@ -43,10 +43,7 @@
   </div>
 </main>
 
-<% if false %>
-
 <%= link_to "団体新規登録", new_user_registration_path %>
-<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
 
 <!-- app/views/statics/index.html.erb -->
 <h1>group.csv 取り込み（statics#index）</h1>
@@ -59,6 +56,6 @@
 <%= form_with url: upload_statics_path, method: :post, local: true, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "取り込む" %>
-<% end %>
+  
 <% end %>
 
