@@ -4,7 +4,7 @@
 
 <div class="page-bar">
   <h1 class="page-title">月別検索</h1>
-  <%= link_to "イベント一覧に戻る", tweets_eventall_path, class: "btn btn--ghost page-bar__back" %>
+  <%= link_to "イベント一覧に戻る", eventall_tweets_path, class: "btn btn--ghost page-bar__back" %>
 </div>
 
 <%= form_tag({controller:"tweets",action:"month"}, method: :get, class: "filter-area", role: "search") do %>

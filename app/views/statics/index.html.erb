@@ -32,7 +32,7 @@
       <h3>課題コンパス（市民団体検索）</h3>
       <p>団体名・ジャンル・キャッチフレーズでサクッと検索。気になる市民団体をすぐ見つけよう。</p>
     <% end %>
-    <%= link_to tweets_eventall_path, class: "topic-card" do %>
+    <%= link_to eventall_tweets_path, class: "topic-card" do %>
       <h3>しみんGO（イベントリスト）</h3>
       <p>市民団体のイベントを地図と一覧でチェック。今日、開催されているイベントにふらっと参加しよう。</p>
     <% end %>
@@ -56,6 +56,6 @@
 <%= form_with url: upload_statics_path, method: :post, local: true, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "取り込む" %>
-  
+
 <% end %>
 
