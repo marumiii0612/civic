@@ -1,0 +1,7 @@
+ja:
+  time:
+    formats:
+      simple: "%Y-%m-%d %H:%M:%S"
+  datetime:
+    formats:
+      simple: "%Y-%m-%d %H:%M:%S"

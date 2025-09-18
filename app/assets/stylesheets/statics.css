@@ -1,0 +1,144 @@
+.top_img{
+    max-width: 90%;
+    margin: 16px auto;
+}
+
+.top_img img{
+  display: block;      /* 余計な隙間を消す */
+  width: 100%;         /* ラッパーに合わせる */
+  height: auto;        /* 縦横比を維持 */
+  border-radius: 12px; /* お好みで */
+  box-shadow: 0 6px 18px rgba(0,0,0,.08); /* お好みで */
+}
+
+:root{
+  --navy:#003366;
+  --orange:#FF6F00;
+  --light:#DDEAF6;
+  --ink:#222;
+}
+
+.top .comment {
+  min-height: 35vh;           /* 画面の高さ全体を確保 */
+  display: flex;
+  align-items: center;         /* 垂直中央 */
+  justify-content: center;     /* 水平方向も中央 */
+  text-align: center;
+  padding: 0 5%;               /* 横余白 */
+}
+
+.top .comment p {
+  color: var(--navy);
+  font-size: clamp(28px, 5vw, 56px);  /* 画面幅に応じて大きく */
+  line-height: 1.6;
+  letter-spacing: .02em;
+  font-weight: 700;
+}
+
+/* キーワード共通：マーカー風の下地 */
+.em{
+  position: relative;
+  display: inline-block;
+  padding: 0 .06em;                 /* 文字の左右に少し余白 */
+  isolation: isolate;               /* 下地を文字の“下”に */
+}
+
+.em::after{
+  content:"";
+  position:absolute;
+  left:-.06em; right:-.06em;
+  bottom:.08em;                     /* 下側に寄せて“マーカー”感 */
+  height: .55em;
+  z-index:-1;
+  border-radius: .25em;
+  transform: skewX(-6deg);          /* 少し斜めで手描き風 */
+}
+
+/* 個別色（ブランドトーン） */
+.em--now::after{
+  background: rgba(255,111,0,.28);  /* オレンジの透過マーカー */
+}
+.em--interest::after{
+  background: rgba(0,51,102,.18);   /* ネイビー薄めのマーカー */
+}
+.em--step::after{
+  background: linear-gradient(90deg, rgba(255,111,0,.35), rgba(255,111,0,.15));
+}
+
+/* ふわっと目に入るワンショットアニメ（順番に） */
+.em{ animation: pop-in .6s ease-out both; }
+.em--now{ animation-delay: .05s; }
+.em--interest{ animation-delay: .25s; }
+.em--step{ animation-delay: .45s; }
+
+@keyframes pop-in{
+  0%{ transform: translateY(.2em) scale(.98); opacity:0; }
+  100%{ transform: none; opacity:1; }
+}
+
+/* 動きが苦手な人への配慮 */
+@media (prefers-reduced-motion: reduce){
+  .em{ animation: none; }
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0px; /* カード間余白 */
+  align-items: stretch;
+}
+
+.topic-card {
+  display: block;                  /* aタグ全体をブロック化 */
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  text-decoration: none;           /* リンク下線を消す */
+  color: inherit;                  /* テキスト色を継承 */
+  cursor: pointer;
+  margin: 10px;
+}
+
+.topic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.06);
+  border-color: #d1d5db;
+}
+
+.topic-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;   /* ← 元の1.05remからアップ */
+  line-height: 1.5;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.topic-card a {
+  text-decoration: none;
+  color: #0f172a;                 /* 濃いめのテキスト色 */
+  border-bottom: 2px solid transparent;
+}
+
+.topic-card a:hover {
+  border-bottom-color: #94a3b8;   /* さりげないホバー下線 */
+}
+
+.topic-card p {
+  margin: 0;
+  color: #475569;
+  font-size: 1.05rem;  /* ← 元の0.93remからアップ */
+  line-height: 1.7;
+}
+
+/* タブレット: 2列 */
+@media (max-width: 900px) {
+  .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* スマホ: 1列 */
+@media (max-width: 600px) {
+  .topics-grid { grid-template-columns: 1fr; }
+}

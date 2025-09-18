@@ -1,0 +1,77 @@
+<head>
+  <%= stylesheet_link_tag 'tshow', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<main class="event-show">
+  <header class="page-head">
+    <h3 class="page-title">イベント詳細</h3>
+    <p class="page-subtitle"><%= @tweet.event.presence || "イベント名未登録" %></p>
+  </header>
+
+  <section class="card">
+    <div class="card__body">
+      <div class="head-row">
+        <% if @tweet.genre.present? %>
+          <span class="badge"><%= @tweet.genre %></span>
+        <% end %>
+        <time class="created">登録：<%= l @tweet.created_at, format: :simple %></time>
+      </div>
+
+      <dl class="meta">
+        <% if @tweet.name.present? %>
+          <div class="meta__row">
+            <dt>団体</dt>
+            <dd><%= @tweet.name %></dd>
+          </div>
+        <% end %>
+
+        <div class="meta__row">
+          <dt>期間</dt>
+          <dd>
+            <% if @tweet.datefrom.present? %>
+              <%= l @tweet.datefrom, format: :simple %>
+            <% end %>
+            <% if @tweet.dateto.present? %>
+              〜 <%= l @tweet.dateto, format: :simple %>
+            <% end %>
+          </dd>
+        </div>
+
+        <% if @tweet.area.present? %>
+          <div class="meta__row">
+            <dt>地区</dt>
+            <dd><%= @tweet.area %></dd>
+          </div>
+        <% end %>
+
+        <% if @tweet.address.present? %>
+          <div class="meta__row">
+            <dt>開催場所</dt>
+            <dd><%= @tweet.address %></dd>
+          </div>
+        <% end %>
+
+        <% if @tweet.about.present? %>
+          <div class="meta__row meta__row--block">
+            <dt>概要</dt>
+            <dd class="textblock"><%= simple_format(@tweet.about) %></dd>
+          </div>
+        <% end %>
+
+        <% if @tweet.eventurl.present? %>
+          <div class="meta__row">
+            <dt>URL</dt>
+            <dd>
+              <%= link_to @tweet.eventurl, @tweet.eventurl, target: "_blank", rel: "noopener",
+                           class: "link link--ellipsis", title: @tweet.eventurl %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+
+      <div class="actions">
+        <%= link_to "イベント一覧に戻る", tweets_path, class: "btn btn--ghost" %>
+      </div>
+    </div>
+  </section>
+</main>

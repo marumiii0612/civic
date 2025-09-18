@@ -1,0 +1,68 @@
+/* ================================
+   CivicLink イベント詳細
+   ================================ */
+:root{
+  --bg:#f9fafb; --card:#fff; --border:#e5e7eb; --text:#1f2937; --muted:#6b7280;
+  --brand:#0ea5e9; --ink:#0369a1; --shadow:0 6px 18px rgba(17,24,39,.08);
+  --radius:12px;
+}
+
+html,body{
+  margin:0; padding:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+  line-height:1.7;
+}
+
+.event-show{max-width:1000px; margin:24px auto 80px; padding:0 16px;}
+
+.page-head{margin:0 0 12px;}
+.page-title{margin:0 0 2px; color:var(--ink); font-size:1.25rem; font-weight:800;}
+.page-subtitle{margin:0; font-size:1.6rem; font-weight:800; letter-spacing:.01em;}
+
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.card__body{padding:16px;}
+
+.head-row{
+  display:flex; gap:10px; align-items:center; justify-content:space-between;
+  margin-bottom:8px;
+}
+.badge{
+  display:inline-block; background:rgba(14,165,233,.1); color:var(--ink);
+  border:1px solid rgba(14,165,233,.25); border-radius:999px; padding:4px 10px;
+  font-size:.8rem; white-space:nowrap;
+}
+.created{color:var(--muted); font-size:.9rem;}
+
+.meta{margin:6px 0 0; padding:0;}
+.meta__row{
+  display:grid; grid-template-columns:130px minmax(0,1fr); gap:12px; align-items:start;
+  padding:8px 0; border-bottom:1px dashed var(--border);
+}
+.meta__row:last-child{border-bottom:none;}
+.meta__row--block dd{white-space:normal;}
+.meta dt{margin:0; color:var(--muted); font-weight:700;}
+.meta dd{margin:0; min-width:0;}
+
+.textblock p{margin:.3rem 0;}
+
+.link{
+  color:var(--ink); text-decoration:none; border-bottom:1px solid rgba(14,165,233,.35);
+}
+.link:hover{color:var(--brand); border-bottom-color:var(--brand);}
+.link--ellipsis{
+  display:inline-block; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.actions{margin-top:12px; display:flex; gap:12px; flex-wrap:wrap;}
+.btn{
+  display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid transparent;
+  text-decoration:none; font-weight:700; cursor:pointer; transition:background .2s ease, transform .05s ease;
+}
+.btn:active{transform:translateY(1px);}
+.btn--primary{background:var(--brand); color:#fff; border-color:var(--brand);}
+.btn--primary:hover{background:var(--ink); border-color:var(--ink);}
+.btn--ghost{background:#fff; color:var(--ink); border:1px solid var(--border);}
+.btn--ghost:hover{border-color:var(--brand);}

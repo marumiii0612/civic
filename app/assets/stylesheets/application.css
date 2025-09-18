@@ -1,0 +1,158 @@
+* { margin: 0; padding: 0; }
+body {
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+}
+
+/* ===== Header & Hamburger ===== */
+header{
+  position: relative;
+  padding: 10px 72px 10px 10px; /* 右にボタン幅(60px)+余白 */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #DDEAF6;
+}
+
+header .title a.title-link,
+header .title a.title-link:visited{
+  color:#003366;
+  text-decoration:none;
+}
+header .title a.title-link:hover{
+  text-decoration:underline;
+}
+
+/* ロゴ画像リンクの操作性アップ */
+.title-link-img{
+  display:inline-block;
+  line-height:0;         /* 余白削減 */
+  cursor:pointer;
+}
+.title-link-img:focus-visible,
+.title-link:focus-visible{
+  outline:2px solid #003366;
+  outline-offset:2px;
+}
+
+.icon_img{ max-width: 80px; margin: 0; }
+.icon_img img{ display: block; width: 100%; margin: 0; }
+
+header .title{
+  display:flex; align-items:center; gap:10px;
+  flex:1 1 auto; /* ボタンを右へ押し出す */
+}
+
+header h1{ font-size: 20px; margin-right: 10px; color:#003366; }
+header h2{ font-size: 15px; margin-left: 0; color:#003366; }
+
+/* 右端・縦中央にピン留め */
+.hamburger{
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px; height: 60px;
+  background: transparent; border: 0; cursor: pointer; padding: 0;
+
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  gap: 10px;
+
+  overflow: visible;   /* 回転時のはみ出しを許容 */
+  z-index: 1001;
+}
+
+/* 三本線 */
+.hamburger .bar{
+  width: 58%;          /* 回転時の横はみ出しを抑制 */
+  height: 3px;
+  background: #003366;
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease;
+  transform-origin: 50% 50%;
+}
+
+/* 開いた時（×） */
+.hamburger.is-open .bar:nth-child(1){ transform: translateY(9px)  rotate(45deg); }
+.hamburger.is-open .bar:nth-child(2){ opacity: 0; }
+.hamburger.is-open .bar:nth-child(3){ transform: translateY(-9px) rotate(-45deg); }
+
+/* キーボード操作配慮 */
+.hamburger:focus-visible{ outline: 2px solid #003366; outline-offset: 2px; }
+
+/* ===== Dropdown Menu ===== */
+.header-list{
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 12px;
+  min-width: 220px;
+  background: #003366; color:#fff;
+  padding: 12px 14px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  z-index: 1000;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: transform .25s ease, opacity .25s ease, visibility 0s .25s;
+}
+
+.header-list.active{
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(0);
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.header-list ul{ list-style: none; margin: 0; padding: 0; }
+.header-list li{ margin: 10px 0; }
+.header-list a{ color: #fff; text-decoration: none; }
+.header-list a:hover{ text-decoration: underline; }
+
+/* ===== Motion Preferences ===== */
+@media (prefers-reduced-motion: reduce){
+  .hamburger .bar, .header-list{ transition: none; }
+}
+
+.site-footer{
+  background: #003366; color: #fff;
+  margin-top: 32px;
+}
+.site-footer a{ color:#fff; text-decoration:none; }
+.site-footer a:hover{ text-decoration: underline; }
+
+.footer-main{
+  width:min(1100px, 92%);
+  margin-inline:auto;
+  display:grid;
+  grid-template-columns: 1.2fr 1fr 1fr; /* brand / nav / actions */
+  gap: 24px;
+  padding: 28px 0;
+}
+
+.footer-logo{ width:44px; height:auto; margin-right:10px; }
+.footer-brand{ display:flex; align-items:flex-start; gap:12px; }
+.footer-title{ font-size:16px; display:block; }
+.footer-tagline{ font-size:13px; opacity:.9; margin-top:6px; }
+
+.footer-nav ul{ list-style:none; padding:0; margin:0; }
+.footer-nav li{ margin:10px 0; }
+
+.footer-sub{
+  border-top: 1px solid rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:space-between;
+  width:min(1100px, 92%); margin-inline:auto; padding:12px 0;
+  font-size:13px;
+}
+.footer-sub .legal{ display:flex; gap:14px; list-style:none; padding:0; margin:0; }
+.footer-sub .to-top{ font-weight:700; }
+
+/* レスポンシブ */
+@media (max-width: 960px){
+  .footer-main{ grid-template-columns: 1fr 1fr; }
+  .footer-actions{ grid-column: 1 / -1; }
+}
+@media (max-width: 640px){
+  .footer-main{ grid-template-columns: 1fr; }
+  .subscribe-form{ flex-direction: column; }
+  .btn-subscribe{ width:100%; }
+  .footer-sub{ flex-direction:column; gap:8px; }
+}

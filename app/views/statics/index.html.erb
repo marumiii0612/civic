@@ -1,0 +1,64 @@
+<head>
+    <%= stylesheet_link_tag 'statics', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<main class="top">
+  <div class="top_img">
+    <%= image_tag "top_img.png" %>
+  </div>
+
+  <div class="comment">
+    <p>
+      まちの <span class="em em--now">今</span> が、見える。<br>
+      あなたの <span class="em em--interest">関心</span> が、見つかる。<br>
+      今日の <span class="em em--step">一歩</span> が、つながりになる。
+    </p>
+  </div>
+
+  <div class="topics-grid">
+    <%= link_to about_statics_path, class: "topic-card" do %>
+      <h3>CivicLinkとは</h3>
+      <p>若者の“参加の少なさ”、地域課題の“探しにくさ”、参加方法の“わかりにくさ”を、見える化とマッチングで解決。</p>
+    <% end %>
+    <%= link_to civic_statics_path, class: "topic-card" do %>
+      <h3>市民参加・市民自治とは</h3>
+      <p>茅ヶ崎市主催の市民参加・市民主催の市民自治の考え方や制度をやさしく解説。</p>
+    <% end %>
+    <%= link_to new_association_path, class: "topic-card" do %>
+      <h3>まちまっち（市民団体マッチング）</h3>
+      <p>関心テーマ・一緒に活動したい世代・年会費・団体規模を答えるだけで、あなたに合う団体をおすすめ。</p>
+    <% end %>
+    <%= link_to groupall_statics_path, class: "topic-card" do %>
+      <h3>課題コンパス（市民団体検索）</h3>
+      <p>団体名・ジャンル・キャッチフレーズでサクッと検索。気になる市民団体をすぐ見つけよう。</p>
+    <% end %>
+    <%= link_to tweets_eventall_path, class: "topic-card" do %>
+      <h3>しみんGO（イベントリスト）</h3>
+      <p>市民団体のイベントを地図と一覧でチェック。今日、開催されているイベントにふらっと参加しよう。</p>
+    <% end %>
+    <%= link_to tweets_path, class: "topic-card" do %>
+      <h3>市民団体ログイン</h3>
+      <p>市民団体向けのログインページ。イベント投稿・更新用（一般の方は登録不要）。</p>
+    <% end %>
+  </div>
+</main>
+
+<% if false %>
+
+<%= link_to "団体新規登録", new_user_registration_path %>
+<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+
+<!-- app/views/statics/index.html.erb -->
+<h1>group.csv 取り込み（statics#index）</h1>
+
+<% if flash[:notice] %><p style="color:green"><%= flash[:notice] %></p><% end %>
+<% if flash[:alert]  %><p style="color:red"><%= flash[:alert]  %></p><% end %>
+
+<p>ファイル未選択なら <code>db/csv/group.csv</code> を読み込みます。</p>
+
+<%= form_with url: upload_statics_path, method: :post, local: true, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "取り込む" %>
+<% end %>
+<% end %>
+

@@ -1,0 +1,140 @@
+<head>
+  <%= stylesheet_link_tag 'eventall', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<div class="page-bar">
+  <h1 class="page-title">月別検索</h1>
+  <%= link_to "イベント一覧に戻る", tweets_eventall_path, class: "btn btn--ghost page-bar__back" %>
+</div>
+
+<%= form_tag({controller:"tweets",action:"month"}, method: :get, class: "filter-area", role: "search") do %>
+  <!-- 月選択（YYYY-MM）。Railsに month_field_tag があります -->
+  <label for="area_search" class="sr-only">月を選択</label>
+  <%= month_field_tag :month, params[:month] %>
+  <%= submit_tag "絞り込み", class: "btn btn--primary" %>
+  <% if params[:month].present? %>
+    <%= link_to "クリア", url_for(only_path: true, params: request.query_parameters.except(:month)), class: "btn btn--ghost" %>
+  <% end %>
+<% end %>
+
+<main class="emap">
+  <!-- 見出し -->
+  <header class="page-head">
+    <h3 class="page-head__title">イベント一覧</h3>
+  </header>
+
+  <!-- 一覧 -->
+  <section class="tweets">
+    <% if @tweets.present? %>
+      <ul class="card-list">
+        <% @tweets.each do |f| %>
+          <li class="card tweet">
+            <div class="card__body">
+              <div class="tweet__head">
+                <h4 class="tweet__title"><%= f.event.presence || "イベント名未登録" %></h4>
+                <% if f.genre.present? %>
+                  <span class="badge"><%= f.genre %></span>
+                <% end %>
+              </div>
+
+              <dl class="meta">
+                <% if f.name.present? %>
+                  <div class="meta__row">
+                    <dt>団体</dt>
+                    <dd><%= f.name %></dd>
+                  </div>
+                <% end %>
+                <div class="meta__row">
+                  <dt>期間</dt>
+                  <dd>
+                    <% if f.datefrom.present? %>
+                      <%= l f.datefrom, format: :simple %>
+                    <% end %>
+                    <% if f.dateto.present? %>
+                      〜 <%= l f.dateto, format: :simple %>
+                    <% end %>
+                  </dd>
+                </div>
+                <% if f.area.present? %>
+                  <div class="meta__row">
+                    <dt>地区</dt>
+                    <dd><%= f.area %></dd>
+                  </div>
+                <% end %>
+                <% if f.address.present? %>
+                  <div class="meta__row">
+                    <dt>住所</dt>
+                    <dd><%= f.address %></dd>
+                  </div>
+                <% end %>
+                <% if f.about.present? %>
+                  <div class="meta__row">
+                    <dt>概要</dt>
+                    <dd><%= truncate(f.about, length: 120) %></dd>
+                  </div>
+                <% end %>
+                <% if f.eventurl.present? %>
+                  <div class="meta__row">
+                    <dt>URL</dt>
+                    <dd>
+                      <%= link_to f.eventurl, f.eventurl, target: "_blank", rel: "noopener",
+                                   class: "link link--ellipsis", title: f.eventurl %>
+                    </dd>
+                  </div>
+                <% end %>
+              </dl>
+
+              <div class="card__actions">
+                <%= link_to "詳細へ", tweet_path(f.id), class: "btn btn--primary" %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="empty">
+        <p>該当する投稿がありません。</p>
+        <p class="empty__hint">キーワードを変えて再検索してみてください。</p>
+      </div>
+    <% end %>
+  </section>
+
+  <!-- マップ -->
+  <section class="map-wrap">
+    <h2 class="section-title">イベントマップ</h2>
+
+    <div id="map" class="map"></div>
+  </section>
+</main>
+
+<!-- 既存のJSはそのまま -->
+<script>
+  function initMap() {
+    let latlng = new google.maps.LatLng(35.3338, 139.4036);
+
+    let styles = [{ stylers: [{ "saturation": 0 }, { "lightness": 0 }] }];
+
+    let map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      styles: styles,
+      center: latlng
+    });
+
+    let transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    // マーカー
+    <% @tweets.each do |tweet| %>
+      (function() {
+        let markerLatLng = { lat: <%= tweet.lat || 0 %>, lng: <%= tweet.lng || 0 %> };
+        let marker = new google.maps.Marker({ position: markerLatLng, map: map });
+        let infowindow = new google.maps.InfoWindow({
+          position: markerLatLng,
+          content: "<a href='<%= tweet_url(tweet.id) %>' target='_blank'><%= j(tweet.name.to_s) %></a>"
+        });
+        marker.addListener('click', function() { infowindow.open(map, marker); });
+      })();
+    <% end %>
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-NjstGmUv9_Hup6T205DA6XakFEDjmoQ&callback=initMap" async defer></script>

@@ -1,0 +1,191 @@
+<head>
+  <%= stylesheet_link_tag 'tnew', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<main class="event-form-page">
+  <header class="page-head">
+    <h3 class="page-title">イベント編集</h3>
+    <p class="page-desc">必要事項を入力し、開催場所を検索して地図のピンを調整してください。</p>
+  </header>
+
+  <section class="card">
+    <div class="card__body">
+      <%= form_with model: @tweet, local: true, class: "event-form" do |f| %>
+
+        <!-- 団体・イベント -->
+        <div class="grid-2">
+          <div class="field">
+            <%= f.label :name, "団体名", class: "label"%>
+            <%= f.text_field :name, size: 30, class: "input", placeholder: "例）CivicLink", required: true %>
+          </div>
+
+          <div class="field">
+            <%= f.label :event, "イベント名", class: "label" %>
+            <%= f.text_field :event, size: 30, class: "input", placeholder: "例）親子ワークショップ", required: true %>
+          </div>
+        </div>
+
+        <!-- ジャンル・地区 -->
+        <div class="grid-2">
+          <div class="field">
+            <%= f.label :genre, "ジャンル", class: "label" %>
+            <%= f.select :genre, [
+              ["保健・医療・福祉","保健・医療・福祉"],
+              ["社会教育","社会教育"],
+              ["まちづくり","まちづくり"],
+              ["観光振興","観光振興"],
+              ["農山漁村・中山間地域","農山漁村・中山間地域"],
+              ["学術・文化・芸術・スポーツ","学術・文化・芸術・スポーツ"],
+              ["環境保全","環境保全"],
+              ["災害救援","災害救援"],
+              ["地域安全","地域安全"],
+              ["人権擁護・平和推進","人権擁護・平和推進"],
+              ["国際協力","国際協力"],
+              ["男女共同参画","男女共同参画"],
+              ["子どもの健全育成","子どもの健全育成"],
+              ["情報化社会","情報化社会"],
+              ["科学技術振興","科学技術振興"],
+              ["経済の活性化","経済の活性化"],
+              ["職業能力開発","職業能力開発"],
+              ["消費者保護","消費者保護"],
+              ["活動の連絡・助言・援助","活動の連絡・助言・援助"],
+              ["その他","その他"]
+            ], { include_blank: "選択して下さい" }, class: "select", required: true %>
+          </div>
+
+          <div class="field">
+            <%= f.label :area, "地区名", class: "label" %>
+            <%= f.select :area, [
+              ["茅ケ崎","茅ケ崎"],
+              ["南","南"], ["海岸","海岸"], ["南湖","南湖"], ["湘南","湘南"],
+              ["鶴嶺東","鶴嶺東"], ["鶴嶺西","鶴嶺西"], ["松林","松林"],
+              ["小和田","小和田"], ["松浪","松浪"], ["浜須賀","浜須賀"],
+              ["湖北","湖北"], ["小出","小出"], ["茅ケ崎市外","茅ケ崎市外"]
+            ], { include_blank: "選択して下さい" }, class: "select", required: true %>
+          </div>
+        </div>
+
+        <!-- 期間 -->
+        <div class="grid-2">
+          <div class="field">
+            <%= f.label :datefrom, "開始時間", class: "label" %>
+            <div class="datetime-group">
+              <%= f.datetime_select :datefrom, {}, { class: "select--inline" } %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= f.label :dateto, "終了時間", class: "label" %>
+            <div class="datetime-group">
+              <%= f.datetime_select :dateto, {}, { class: "select--inline" } %>
+            </div>
+          </div>
+        </div>
+
+        <!-- 開催場所（住所検索） -->
+        <div class="field">
+          <%= f.label :address, "開催場所（住所）", class: "label" %>
+          <div class="inline-row">
+            <%= f.text_field :address, size: 30, id: "address", class: "input", placeholder: "例）神奈川県茅ヶ崎市茅ヶ崎1-1-1", required: true %>
+            <button type="button" class="btn btn--ghost" onclick="codeAddress()">住所で地図を検索</button>
+          </div>
+          <p class="help">住所を入力して「住所で地図を検索」を押すと、地図がその位置に移動します。</p>
+        </div>
+
+        <!-- 緯度経度（readonly） -->
+        <div class="grid-2">
+          <div class="field">
+            <%= f.label :lat, "緯度（自動入力）", class: "label" %>
+            <%= f.text_field :lat, id: "lat", class: "input input--readonly", readonly: true, required: true %>
+          </div>
+          <div class="field">
+            <%= f.label :lng, "経度（自動入力）", class: "label" %>
+            <%= f.text_field :lng, id: "lng", class: "input input--readonly", readonly: true, required: true %>
+          </div>
+        </div>
+
+        <!-- 概要・URL -->
+        <div class="field">
+          <%= f.label :about, "イベント内容", class: "label" %>
+          <%= f.text_area :about, size: "30x4", class: "textarea", placeholder: "イベントの概要・対象・申込方法など", required: true %>
+        </div>
+
+        <div class="field">
+          <%= f.label :eventurl, "イベントURL", class: "label" %>
+          <%= f.text_area :eventurl, size: "30x2", class: "textarea", placeholder: "告知ページや申込フォームのURL" %>
+        </div>
+
+        <!-- 送信 -->
+        <div class="actions">
+          <%= f.submit "編集する", class: "btn btn--primary btn--lg" %>
+          <%= link_to "一覧に戻る", tweets_path, class: "btn btn--ghost" %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- 地図 -->
+  <section class="card">
+    <div class="card__body">
+      <h4 class="card__title">地図（ピンはドラッグで調整できます）</h4>
+      <div id="map" class="map"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Google Maps（そのまま利用） -->
+<script>
+let map, marker, geocoder, inited = false;
+
+function initMap() {
+  geocoder = new google.maps.Geocoder();
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 35.3338, lng: 139.4036 }, // 茅ケ崎市
+    zoom: 15,
+  });
+  inited = true;
+
+  // 既にlat/lngが入っている場合はマーカー表示（編集時など）
+  const latField = document.getElementById('lat');
+  const lngField = document.getElementById('lng');
+  if (latField && lngField && latField.value && lngField.value) {
+    const pos = { lat: parseFloat(latField.value), lng: parseFloat(lngField.value) };
+    placeMarker(pos);
+    map.setCenter(pos);
+  }
+}
+
+function codeAddress() {
+  if (!inited) return;
+  const inputEl = document.getElementById('address');
+  if (!inputEl || !inputEl.value) { alert('住所を入力してください'); return; }
+
+  geocoder.geocode({ address: inputEl.value }, function(results, status) {
+    if (status === 'OK' && results[0]) {
+      const loc = results[0].geometry.location;
+      map.setCenter(loc);
+      placeMarker(loc);
+      // lat/lng反映
+      document.getElementById('lat').value = loc.lat();
+      document.getElementById('lng').value = loc.lng();
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });
+}
+
+function placeMarker(latlng) {
+  if (marker) marker.setMap(null);
+  marker = new google.maps.Marker({
+    map: map,
+    position: latlng,
+    draggable: true
+  });
+  // ドラッグ終了でlat/lng更新
+  marker.addListener('dragend', function(ev) {
+    document.getElementById('lat').value = ev.latLng.lat();
+    document.getElementById('lng').value = ev.latLng.lng();
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-NjstGmUv9_Hup6T205DA6XakFEDjmoQ&callback=initMap" async defer></script>

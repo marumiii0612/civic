@@ -1,0 +1,90 @@
+<head>
+  <%= stylesheet_link_tag 'groupall', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<main class="groups-page">
+  <section class="search">
+    <h3 class="search__title">市民団体を検索（１つ以上入力してください）</h3>
+
+    <%= form_tag(search_statics_path, method: :get, class: "search-form", role: "search") do %>
+      <div class="search-form__grid">
+        <div class="field">
+          <label for="group_name">団体名</label>
+          <%= text_field_tag :name, params[:name], id: "group_name", class: "input", placeholder: "例）PuHU、こども応援丸 など" %>
+        </div>
+
+        <div class="field">
+          <label for="group_genre">ジャンル</label>
+          <%# 可能なら @genres をControllerで用意（nil除外＆昇順）。なければfallback %>
+          <% genre_options = defined?(@genres) && @genres.present? ? @genres : Group.distinct.where.not(genre: [nil, ""]).order(:genre).pluck(:genre) %>
+          <%= select_tag :genre,
+                options_for_select(genre_options, params[:genre]),
+                include_blank: '選択してください',
+                id: "group_genre",
+                class: "select" %>
+        </div>
+
+        <div class="field">
+          <label for="group_keyword">キャッチフレーズ</label>
+          <%= text_field_tag :keyword, params[:keyword], id: "group_keyword", class: "input", placeholder: "例）子育て、健康、福祉…" %>
+        </div>
+      </div>
+
+      <div class="search-form__actions">
+        <%= submit_tag '検索する', class: "btn btn--primary" %>
+        <%# クリア（リセット）リンク：検索条件解除 %>
+        <%= link_to '条件をクリア', groupall_statics_path, class: "btn btn--ghost" %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="results">
+    <div class="results__head">
+      <h3 class="results__title">検索結果</h3>
+      <% if @groups.present? %>
+        <p class="results__count"><%= @groups.size %>件</p>
+      <% end %>
+    </div>
+
+    <% if @groups.any? %>
+      <ul class="card-list">
+        <% @groups.each do |g| %>
+          <li class="card">
+            <div class="card__body">
+              <div class="card__head">
+                <h4 class="card__title"><%= g.name %></h4>
+                <% if g.genre.present? %>
+                  <span class="badge"><%= g.genre %></span>
+                <% end %>
+              </div>
+
+              <% if g.respond_to?(:catchphrase) && g.catchphrase.present? %>
+                <p class="card__catch"><%= g.catchphrase %></p>
+              <% else %>
+                <p class="card__catch card__catch--muted">キャッチフレーズ未登録</p>
+              <% end %>
+
+              <div class="card__actions">
+                <%= link_to "詳細へ", static_path(g), class: "btn btn--primary" %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+
+      <%# ページネーションを使う場合（kaminari等）:
+          <%= paginate @groups %>
+      %>
+
+    <% else %>
+      <div class="empty">
+        <p>該当する市民団体はありません。</p>
+        <p class="empty__hint">キーワードを短くしたり、ジャンルを「選択してください」に戻して再検索してみてください。</p>
+      </div>
+    <% end %>
+  </section>
+</main>
+
+
+
+

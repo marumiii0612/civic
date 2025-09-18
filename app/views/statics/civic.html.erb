@@ -1,0 +1,182 @@
+<head>
+    <%= stylesheet_link_tag 'civic', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+  <!-- キーボード操作ユーザー向けスキップリンク -->
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ページ内ナビ（常に上部に出る小さなインデックス） -->
+  <nav class="inpage-nav" aria-label="ページ内ナビ">
+    <ul>
+      <li><a href="#def">用語</a></li>
+      <li><a href="#dept">所管と担当</a></li>
+      <li><a href="#stats">数字で見る</a></li>
+      <li><a href="#structure">構造図</a></li>
+      <li><a href="#menu">参加メニュー</a></li>
+      <li><a href="#resources">リソース</a></li>
+      <li><a href="#next">次の一歩</a></li>
+    </ul>
+  </nav>
+
+  <main id="main" class="wrap">
+    <!-- Hero -->
+    <section class="hero">
+      <span class="kicker">はじめての方へ</span>
+      <h1>市民参加・市民自治とは</h1>
+      <p class="lead">
+        「市民参加：市主催の場に意見を届けること」と、「市民自治：市民参加あるいは市民団体の活動に加わること」。<br>
+        ふたつをつなげて、茅ヶ崎の “まちの今・関心・一歩” を見える化します。
+      </p>
+      <div class="cta" aria-label="関連リンク">
+        <a class="btn" href="https://www.city.chigasaki.kanagawa.jp/shiminsanka/" target="_blank" rel="noopener">市民活動について（市サイト）</a>
+        <a class="btn alt" href="https://www.city.chigasaki.kanagawa.jp/public/" target="_blank" rel="noopener">市民参加について（市サイト）</a>
+      </div>
+    </section>
+
+    <!-- 定義 -->
+    <section class="card section" id="def" aria-labelledby="def-title">
+      <h2 class="section-title" id="def-title">用語の定義</h2>
+      <dl class="def">
+        <div class="def-row"><dt>市民参加</dt><dd>市主催の市民参加に参加すること（市政に意見を届ける・対話に加わるなど）。</dd></div>
+        <div class="def-row"><dt>市民自治</dt><dd>上記に加え、市民団体の活動に参加すること（自発的・自立的な地域実践）。</dd></div>
+        <div class="def-row"><dt>自治会</dt><dd>地域活動や住民同士の交流を促進する住民の自治組織。</dd></div>
+        <div class="def-row"><dt>市民活動団体</dt><dd>特定分野について自発的かつ自立的に活動する団体（NPO等を含む）。</dd></div>
+        <div class="def-row"><dt>市民団体</dt><dd>自治会と市民活動団体の総称。</dd></div>
+      </dl>
+      <p class="notice">※ 本ページは茅ヶ崎市の公開情報をもとに、CivicLink向けに要約・再編集した解説です。</p>
+    </section>
+
+    <!-- 所管と担当 + 数字で見る -->
+    <section class="grid cols-2 section" id="dept" aria-label="所管と担当">
+      <article class="card">
+        <h2 class="section-title">市民自治推進課（くらし安全部）</h2>
+        <p class="meta">2023年4月～（役割の抜粋）</p>
+
+        <h3 class="subhead">地域自治担当</h3>
+        <ul class="list-better">
+          <li>自治会への財政的支援</li>
+          <li>11の地域集会施設（コミセン）の運営管理</li>
+          <li>春の市民まつりの運営</li>
+        </ul>
+
+        <h3 class="subhead mt-lg">協働推進担当</h3>
+        <ul class="list-better">
+          <li>市民活動 / 市民参加の推進・啓発</li>
+          <li>市民活動サポートセンター（サポセン）の管理運営</li>
+          <li>「市民活動げんき基金」による伴走支援</li>
+          <li>市民活動推進委員会の実施</li>
+          <li>文教大学・青年会議所との市民討議会</li>
+          <li>まちぢから協議会連絡会での協議</li>
+        </ul>
+
+        <div class="tags" aria-label="関連施設・制度">
+          <span class="tag">コミセン</span><span class="tag">サポセン</span><span class="tag">げんき基金</span><span class="tag">協働</span>
+        </div>
+      </article>
+
+      <article class="card" id="stats">
+        <h2 class="section-title">数字で見る茅ヶ崎の市民活動</h2>
+        <div class="statbar" role="list">
+          <div class="stat" role="listitem">
+            <div class="num">13</div>
+            <div class="cap">地区（まちぢから協議会 / 自治会連合会）</div>
+          </div>
+          <div class="stat" role="listitem">
+            <div class="num">135</div>
+            <div class="cap">自治会（2025/3/31時点）</div>
+          </div>
+          <div class="stat" role="listitem">
+            <div class="num">120</div>
+            <div class="cap">市登録の市民活動団体</div>
+          </div>
+          <div class="stat" role="listitem">
+            <div class="num">303+</div>
+            <div class="cap">サポセン登録団体</div>
+          </div>
+        </div>
+        <p class="notice">出典：市公式情報・サポセン公表値（最終更新 2025/3/31 時点の提供値に基づく）</p>
+      </article>
+    </section>
+
+    <!-- 仕組み図 -->
+    <section class="card section" id="structure" aria-labelledby="struct-title">
+      <h2 class="section-title" id="struct-title">市民団体の構造（関係図）</h2>
+      <ul class="tree" aria-label="団体構造">
+        <li><strong>まちぢから協議会連絡会</strong> <span class="pill">市域</span>
+          <ul>
+            <li>まちぢから協議会（12） / 自治会連合会（1） <span class="pill">地区</span>
+              <ul>
+                <li>自治会（135）</li>
+                <li>市民活動団体（多数）</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="cta">
+        <a class="btn alt" href="https://chigasaki-machiren.org/" target="_blank" rel="noopener">まちぢから協議会連絡会（公式サイト）</a>
+      </div>
+    </section>
+
+    <!-- 参加メニュー -->
+    <section class="card section" id="menu" aria-labelledby="menu-title">
+      <h2 class="section-title" id="menu-title">市民参加のメニュー（市主導）</h2>
+      <ul class="list-better">
+        <li>意見交換会・公開討議会・シンポジウム・説明会</li>
+        <li>アンケート・ヒアリング・パブリックコメント手続</li>
+        <li>政策提案手続・審議会等委員公募・市民討議会</li>
+        <li>作文・イラスト募集 ほか</li>
+      </ul>
+      <div class="cta">
+        <a class="btn" href="https://www.city.chigasaki.kanagawa.jp/public/1007537/yokoku/index.html" target="_blank" rel="noopener">
+          実施中のパブリックコメント（市サイト） <small>最新一覧</small>
+        </a>
+        <a class="btn alt" href="https://www.city.chigasaki.kanagawa.jp/public/1007537/1007597.html" target="_blank" rel="noopener">
+          パブコメの流れ（市サイト） <small>提出～反映</small>
+        </a>
+      </div>
+    </section>
+
+    <!-- リソース -->
+    <section class="grid cols-3 section" id="resources" aria-label="使えるリソース">
+      <article class="card">
+        <h3 class="subhead">ちがさき市民活動サポートセンター</h3>
+        <p class="mono">9:30–21:30 / 第3水曜・年末年始休館</p>
+        <p>相談・会議室・講座など、活動の拠点。指定管理者が運営。</p>
+        <div class="cta">
+          <a class="btn alt" href="https://www.city.chigasaki.kanagawa.jp/shisetsu_info/1002568/1002697.html" target="_blank" rel="noopener">施設案内（市サイト）</a>
+          <a class="btn" href="https://sapocen.net/" target="_blank" rel="noopener">サポセン（公式サイト）</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3 class="subhead">市民活動げんき基金</h3>
+        <p>市民活動を財政支援する補助制度。寄附・助成・活用事例の公開あり。</p>
+        <div class="cta">
+          <a class="btn" href="https://www.city.chigasaki.kanagawa.jp/shiminsanka/genki/" target="_blank" rel="noopener">制度（市サイト）</a>
+          <a class="btn alt" href="https://www.city.chigasaki.kanagawa.jp/shiminsanka/hojo/index.html" target="_blank" rel="noopener">補助制度（市サイト）</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- 次の一歩 -->
+    <section class="card section" id="next" aria-labelledby="next-title">
+      <h2 class="section-title" id="next-title">次の一歩</h2>
+      <ol class="list-steps">
+        <li><strong>興味のあるテーマを決める。</strong>（例：子ども・環境・防災・文化 など）</li>
+        <li><strong>団体を探す。</strong> CivicLinkの「課題コンパス」やサポセン登録団体を検索。</li>
+        <li><strong>イベントに参加する / 相談する。</strong> コミセン・サポセン・各団体の窓口へ。</li>
+        <li><strong>市の意見募集に投稿する。</strong> パブコメや意見交換会に参加。</li>
+      </ol>
+      <div class="cta">
+        <a class="btn alt" href="<%= new_association_path %>">まちまっち <small>団体マッチング</small></a>
+        <a class="btn" href="<%= url_for(controller: :tweets, action: :name) %>">課題コンパスへ <small>団体検索</small></a>
+        <a class="btn alt" href="<%= url_for(controller: :maps, action: :index) %>">しみんGO <small>イベント地図</small></a>
+      </div>
+      <p class="footer-note">本ページの数値・制度名は市公式情報に準拠（2025年3月31日時点の提供値）。最新は各リンク先をご確認ください。</p>
+    </section>
+
+    <button class="to-top" type="button" aria-label="ページ上部へ" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+  </main>
+</body>

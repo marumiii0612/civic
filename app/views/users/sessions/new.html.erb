@@ -1,0 +1,55 @@
+<head>
+    <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<div class="auth">
+  <header class="auth__head">
+    <h1 class="auth__title">団体ログイン</h1>
+    <p class="auth__lead">登録したメールアドレスとパスワードを入力してください。</p>
+  </header>
+
+  <!-- Deviseのエラーメッセージ（任意） -->
+  <%= devise_error_messages! if defined?(devise_error_messages!) %>
+
+  <div class="auth-card">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+
+      <div class="form-row">
+        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "civiclink@gmail.com",
+              required: true,
+              class: "input" %>
+      </div>
+
+      <div class="form-row">
+        <%= f.label :password, "パスワード", class: "form-label" %>
+        <%= f.password_field :password,
+              autocomplete: "current-password",
+              placeholder: "",
+              required: true,
+              class: "input" %>
+      </div>
+
+      <% if devise_mapping.rememberable? -%>
+        <div class="form-row form-row--inline">
+          <label class="check">
+            <%= f.check_box :remember_me, class: "check__control" %>
+            <span class="check__label">ログイン状態を保持する</span>
+          </label>
+        </div>
+      <% end -%>
+
+      <div class="form-actions">
+        <%= f.submit "ログイン", class: "btn btn--primary btn--block" %>
+      </div>
+    <% end %>
+
+    <div class="auth-links">
+      <%= render "users/shared/links" %>
+      <%= link_to "トップページに戻る", root_path, class: "link" %>
+    </div>
+  </div>
+</div>

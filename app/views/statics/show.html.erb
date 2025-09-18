@@ -1,0 +1,141 @@
+<head>
+  <%= stylesheet_link_tag 'sshow', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<main class="group-show">
+  <header class="group-head">
+    <h3 class="group-head__title">市民団体名</h3>
+    <p class="group-head__subtitle"><%= @group.name %></p>
+  </header>
+
+  <!-- 概要 -->
+  <section class="card">
+    <div class="card__body">
+      <% if @group.catchphrase.present? %>
+        <p class="catch"><%= @group.catchphrase %></p>
+      <% end %>
+
+      <% if @group.purpose.present? %>
+        <h4 class="card__title">目的</h4>
+        <div class="textblock"><%= simple_format(@group.purpose) %></div>
+      <% end %>
+
+      <% if @group.about.present? %>
+        <h4 class="card__title">活動内容</h4>
+        <div class="textblock"><%= simple_format(@group.about) %></div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- 連絡先 / 所在地 -->
+  <section class="grid-2">
+    <article class="card">
+      <div class="card__body">
+        <h4 class="card__title">連絡先</h4>
+        <dl class="meta">
+          <% if @group.phone.present? %>
+            <div class="meta__row">
+              <dt>電話</dt>
+              <dd>
+                <%= link_to @group.phone, "tel:#{@group.phone}", class: "link" %>
+              </dd>
+            </div>
+          <% end %>
+          <% if @group.mail.present? %>
+            <div class="meta__row">
+              <dt>メール</dt>
+              <dd>
+                <%= mail_to @group.mail, @group.mail, class: "link" %>
+              </dd>
+            </div>
+          <% end %>
+          <% if @group.url.present? %>
+            <div class="meta__row">
+                <dt>参考URL</dt>
+              <dd>
+              <%= link_to @group.url, safe_url(@group.url),
+                target: "_blank", rel: "noopener",
+                class: "link link--ellipsis", title: @group.url %>
+            </dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card__body">
+        <h4 class="card__title">所在地・活動地域</h4>
+        <dl class="meta">
+          <% if @group.g_address.present? %>
+            <div class="meta__row">
+              <dt>住所</dt>
+              <dd><%= @group.g_address %></dd>
+            </div>
+          <% end %>
+          <% if @group.g_area.present? %>
+            <div class="meta__row">
+              <dt>活動地域</dt>
+              <dd><%= @group.g_area %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    </article>
+  </section>
+
+  <!-- 基本情報 -->
+  <section class="card">
+    <div class="card__body">
+      <h4 class="card__title">基本情報</h4>
+      <ul class="chiplist">
+        <% if @group.genre.present? %>
+          <li class="chip"><%= @group.genre %></li>
+        <% end %>
+      </ul>
+
+      <dl class="meta meta--cols">
+        <% if @group.establishment.present? %>
+          <div class="meta__row">
+            <dt>設立</dt>
+            <dd><%= @group.establishment %>年</dd>
+          </div>
+        <% end %>
+        <% if @group.member.present? %>
+          <div class="meta__row">
+            <dt>会員数</dt>
+            <dd><%= @group.member %>人</dd>
+          </div>
+        <% end %>
+        <% if @group.range.present? %>
+          <div class="meta__row">
+            <dt>年代</dt>
+            <dd><%= @group.range %>代</dd>
+          </div>
+        <% end %>
+        <% if @group.fee_year.present? %>
+          <div class="meta__row">
+            <dt>年会費</dt>
+            <dd><%= @group.fee_year %>円</dd>
+          </div>
+        <% end %>
+        <% if @group.budget_2025.present? %>
+          <div class="meta__row">
+            <dt>予算（2025）</dt>
+            <dd><%= @group.budget_2025 %>万円</dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </section>
+
+  <!-- アクション -->
+  <div class="actions">
+  <%= link_to "市民団体検索に戻る", groupall_statics_path, class: "btn btn--primary" %>
+
+  <%# ▼ 連絡導線の追加例（必要ならアンコメント）
+  <%# if @group.mail.present? %>
+  <%#= mail_to @group.mail, "メールする", class: "btn btn--ghost" %>
+  <%# end %>
+</div>
+</main>

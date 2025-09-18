@@ -1,0 +1,131 @@
+<head>
+    <%= stylesheet_link_tag 'about', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<div class="civiclink">
+  <section class="hero">
+    <h1 class="hero__title">CivicLinkとは</h1>
+    <p class="hero__lead">
+    CivicLink（シビックリンク）は、神奈川県茅ヶ崎市で活動される方々（在住・通勤・通学）を対象に、
+    地域の課題や市民参加・市民自治の「入口」を分かりやすく、楽しく提供するプラットフォームです。
+    自ら何に興味を持ってよいかが分からない方にも、「参加しやすさ」を重視し、若者や忙しい方でも
+    使える情報にアクセスできるよう設計されています。
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">CivicLinkの背景</h2>
+
+    <div class="fact">
+      <h3 class="fact__title">市民参加・市民自治に関わる人が少ない</h3>
+      <p class="fact__body">
+        茅ヶ崎市民の中で、市主催のアンケート・ヒアリング・パブリックコメントなど
+        「市民参加」の経験がない人が多いことが、最近の調査で分かっています。
+        また、茅ケ崎市で結成されている市民団体では高齢化が進み、若者による市民自治が
+        極めて少ない状況です。
+      </p>
+      <p class="fact__ref">
+        参考：
+        <a href="https://www.city.chigasaki.kanagawa.jp/public/1033040/1056848/index.html" target="_blank" rel="noopener">茅ヶ崎市：市民参加の現状（令和6年度）</a>
+      </p>
+    </div>
+
+    <div class="fact">
+      <h3 class="fact__title">若者の参加が特に少ない</h3>
+      <p class="fact__body">
+        市民団体（自治会・市民活動団体）は、実質的に高齢者の活動場所になっており、
+        若年層の関心・参加が低いという声があります。
+      </p>
+    </div>
+
+    <div class="fact">
+      <h3 class="fact__title">地域課題やイベント情報の検索コストが高い</h3>
+      <p class="fact__body">
+        市がホームページで公開している情報は文字が多く、イラストなどによる可視化が少ない状況です。
+        また、各団体の情報が分散していて、参加しようとすると複数のページをたどらなければならないという
+        コストがかかります。
+      </p>
+    </div>
+
+    <div class="fact">
+      <h3 class="fact__title">市民参加の方法や意義が分かりにくい</h3>
+      <p class="fact__body">
+        市民参加の意義や手続きの方法はホームページ等で紹介されていますが、
+        「具体的にどうすればよいか」「自分に関係するか」が見えにくく、
+        説明資料も文字・用語が難しいとの意見があります。
+      </p>
+      <p class="fact__ref">
+        参考：
+        <a href="https://www.city.chigasaki.kanagawa.jp/public/1042340.html" target="_blank" rel="noopener">茅ヶ崎市：市民参加とは</a>
+      </p>
+    </div>
+
+    <div class="fact">
+      <h3 class="fact__title">時間・場所の制約がある</h3>
+      <p class="fact__body">
+        イベントが対面中心で、「日程が合わない」「交通・場所が分かりづらい」等の理由で
+        参加を躊躇する人が多い状況です。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">CivicLinkの目的</h2>
+    <ul class="goal-list">
+      <li>若年層・時間のない方の参加率を上げる</li>
+      <li>市政や地域の透明性・信頼性を向上させる</li>
+      <li>地域課題の可視化を進め、市民が主体的に動きやすくなる</li>
+      <li>市民と行政の距離を縮め、「声を届ける文化」を育てる</li>
+      <li>コミュニティの再活性化と地域愛着の増加</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">CivicLinkの対象</h2>
+    <ul class="audience-list">
+      <li>茅ヶ崎市在住・在勤・在学の方（年代問わず）</li>
+      <li>自分の興味・関心を見つけたい方</li>
+      <li>地域に何かしたいが、何から始めればよいか分からない方</li>
+      <li>忙しい方・若い方</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">CivicLinkの使い方</h2>
+
+    <div class="card-grid">
+      <%= link_to civic_statics_path, class: "topic-card", aria: { label: "茅ケ崎市の市民参加・市民自治を知る" } do %>
+        <h3 class="topic-card__title">茅ケ崎市の市民参加・市民自治を知る</h3>
+        <p class="topic-card__desc">仕組みや意義、始め方を分かりやすく解説</p>
+        <span class="topic-card__cta">見る</span>
+      <% end %>
+
+      <%= link_to new_association_path, class: "topic-card", aria: { label: "自分に合う団体を探す" } do %>
+        <h3 class="topic-card__title">自分に合う市民団体を探す</h3>
+        <p class="topic-card__desc">関心・世代・費用・規模からおすすめを提示</p>
+        <span class="topic-card__cta">探す</span>
+      <% end %>
+
+      <%= link_to groupall_statics_path, class: "topic-card", aria: { label: "茅ケ崎市の市民団体を検索する" } do %>
+        <h3 class="topic-card__title">茅ケ崎市の市民団体を検索する</h3>
+        <p class="topic-card__desc">団体名・ジャンル・キャッチフレーズでサクッと検索</p>
+        <span class="topic-card__cta">検索</span>
+      <% end %>
+
+      <%= link_to tweets_eventall_path, class: "topic-card", aria: { label: "茅ケ崎市・市民団体が主催するイベントを確認する" } do %>
+        <h3 class="topic-card__title">茅ケ崎市・市民団体のイベント</h3>
+        <p class="topic-card__desc">地図と一覧で今日/週末の開催情報をチェック</p>
+        <span class="topic-card__cta">チェック</span>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">CivicLinkの価値</h2>
+    <p class="body">
+      「地域コミュニティの希薄化」という課題がある中で、関心・参加を促す仕組みの1つとなります。
+      行政側の人手や資源には限りがあり、市民自身が参加し協力することで、地域を支える必要性が高まっています。
+      若者にとって、可視性・アクセスの良さ・参加のしやすさが参加の鍵となっています。
+    </p>
+  </section>
+</div>
