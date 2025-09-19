@@ -3,15 +3,25 @@
   padding: 0;
 }
 
+:root{
+  /* 既存の変数はそのまま。以下だけ追加/変更 */
+  --navy:#003366;
+  --orange:#FF6F00;
+  --light:#DDEAF6;
+  --ink:#222;
+}
+
 body {
   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3",
                "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+  padding-top: 90px; /* ヘッダー高さ分の余白 */
 }
 
 /* ===== Header & Hamburger ===== */
 header {
   position: fixed;
   top: 0; left: 0; right: 0;
+  height: 80px;
   padding: 10px 72px 10px 10px; /* 右にボタン幅(60px)+余白 */
   display: flex;
   align-items: center;
@@ -44,7 +54,7 @@ header .title a.title-link:hover {
   outline-offset: 2px;
 }
 
-.icon_img { max-width: 80px; margin: 0; }
+.icon_img { max-width: 65px; margin: 0; }
 .icon_img img { display: block; width: 100%; margin: 0; }
 
 header .title {
@@ -54,8 +64,8 @@ header .title {
   flex: 1 1 auto; /* ボタンを右へ押し出す */
 }
 
-header h1 { font-size: 20px; margin-right: 10px; color:#003366; }
-header h2 { font-size: 15px; margin-left: 0; color:#003366; }
+header h1 { font-size: 1.2rem; margin-right: 10px; color:#003366; }
+header h2 { font-size: 0.75rem; margin-left: 0; color:#003366; }
 
 /* 右端・縦中央にピン留め */
 .hamburger {
@@ -96,7 +106,7 @@ header h2 { font-size: 15px; margin-left: 0; color:#003366; }
 /* ===== Dropdown Menu ===== */
 .header-list {
   position: absolute;
-  top: 88px;   /* ← ヘッダー高さ + 余白を固定値で指定 */
+  top: 88px;   /* ← ヘッダー高さ + 余白 */
   right: 12px;
   min-width: 220px;
   background: #003366;
@@ -132,7 +142,7 @@ header h2 { font-size: 15px; margin-left: 0; color:#003366; }
 
 /* ===== Footer ===== */
 .site-footer {
-  background: #003366; color: #fff;
+  background: #002255; color: #fff;
   margin-top: 32px;
 }
 .site-footer a { color:#fff; text-decoration:none; }

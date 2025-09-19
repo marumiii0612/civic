@@ -2,6 +2,7 @@
   <%= stylesheet_link_tag 'eventall', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 
+<main class="emap">
 <div class="page-bar">
   <h1 class="page-title">地区別検索</h1>
   <%= link_to "イベント一覧に戻る", eventall_tweets_path, class: "btn btn--ghost page-bar__back" %>
@@ -13,7 +14,7 @@
         options_for_select([
           ["茅ケ崎","茅ケ崎"], ["南","南"], ["海岸","海岸"], ["南湖","南湖"], ["湘南","湘南"],
           ["鶴嶺東","鶴嶺東"], ["鶴嶺西","鶴嶺西"], ["松林","松林"], ["小和田","小和田"],
-          ["松浪","松浪"], ["浜須賀","浜須賀"], ["湖北","湖北"], ["小出","小出"], ["茅ケ崎市外","茅ケ崎市外"]
+          ["松浪","松浪"], ["浜須賀","浜須賀"], ["湘北","湘北"], ["小出","小出"], ["茅ケ崎市外","茅ケ崎市外"]
         ], params[:search]),
         include_blank: "▼（地区を選択）",
         id: "area_search",
@@ -25,11 +26,10 @@
   <% end %>
 <% end %>
 
-<main class="emap">
   <!-- 見出し -->
-  <header class="page-head">
+  <div class="page-head">
     <h3 class="page-head__title">イベント一覧</h3>
-  </header>
+  </div>
 
   <!-- 一覧 -->
   <section class="tweets">

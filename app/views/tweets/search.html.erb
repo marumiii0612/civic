@@ -13,7 +13,7 @@
 
   <!-- 検索 -->
   <section class="search">
-    <h3 class="section-title">イベントを検索</h3>
+    <h3 class="section-title">イベント検索</h3>
     <%= form_tag({controller: "tweets", action: "search"}, method: :get, class: "search-form", role: "search") do %>
       <div class="search-form__row">
         <%= text_field_tag :search, params[:search], class: "input", placeholder: "イベント名、団体名、内容を入力" %>
@@ -23,9 +23,9 @@
   </section>
 
   <!-- 見出し -->
-  <header class="page-head">
+  <div class="page-head">
     <h3 class="page-head__title">イベント一覧</h3>
-  </header>
+  </div>
 
   <!-- 一覧 -->
   <section class="tweets">

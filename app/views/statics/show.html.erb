@@ -3,10 +3,10 @@
 </head>
 
 <main class="group-show">
-  <header class="group-head">
+  <div class="group-head">
     <h3 class="group-head__title">市民団体名</h3>
     <p class="group-head__subtitle"><%= @group.name %></p>
-  </header>
+  </div>
 
   <!-- 概要 -->
   <section class="card">
@@ -132,10 +132,5 @@
   <!-- アクション -->
   <div class="actions">
   <%= link_to "市民団体検索に戻る", groupall_statics_path, class: "btn btn--primary" %>
-
-  <%# ▼ 連絡導線の追加例（必要ならアンコメント）
-  <%# if @group.mail.present? %>
-  <%#= mail_to @group.mail, "メールする", class: "btn btn--ghost" %>
-  <%# end %>
-</div>
+  </div>
 </main>

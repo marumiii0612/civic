@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag 'tindex', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 
-<main class="emap">
+<main class="tweets-index" data-page="tweets-index">
   <div class="top">
   <div class="top-action">
     <%= link_to "＋ イベント入力", new_tweet_path, class: "btn btn--cta" %>
@@ -13,15 +13,17 @@
   </div>
   
 <!-- 見出し -->
-  <header class="page-head">
+  <div class="page-head">
     <h3 class="page-head__title">イベント一覧</h3>
-  </header>
+  </div>
 
   <!-- 一覧 -->
   <section class="tweets">
     <% if @tweets.present? %>
       <ul class="card-list">
         <% @tweets.each do |f| %>
+
+          <% if user_signed_in? && current_user.id == f.user_id %>
           <li class="card tweet">
             <div class="card__body">
               <div class="tweet__head">
@@ -77,17 +79,19 @@
                   </div>
                 <% end %>
               </dl>
+              
               <div class="card_three">
               <div class="card__actions">
-                <%= link_to "詳細へ", tweet_path(f.id), class: "btn btn--primary" %>
+                <%= link_to "編集する", edit_tweet_path(f.id), class: "btn btn--primary"%>
               </div>
               <div class="card__actions">
-                <%= link_to "編集する", edit_tweet_path(f.id), class: "btn btn--primary" %>
-              </div>
-              <div class="card__actions">
-                <%= link_to "削除する", tweet_path(f.id), class: "btn btn--primary", data: {turbo_method: :delete} %>
+                <%= link_to "削除する", tweet_path(f.id), class: "btn btn--primary", data: {turbo_method: :delete, turbo_confirm: "本当に削除しますか"} %>
               </div>
               </div>
+
+              <% end %>
+
+
             </div>
           </li>
         <% end %>
@@ -126,6 +130,7 @@
 
     // マーカー
     <% @tweets.each do |tweet| %>
+      <% if user_signed_in? && current_user.id == tweet.user_id %>
       (function() {
         let markerLatLng = { lat: <%= tweet.lat || 0 %>, lng: <%= tweet.lng || 0 %> };
         let marker = new google.maps.Marker({ position: markerLatLng, map: map });
@@ -136,7 +141,7 @@
         marker.addListener('click', function() { infowindow.open(map, marker); });
       })();
     <% end %>
+    <% end %>
   }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-NjstGmUv9_Hup6T205DA6XakFEDjmoQ&callback=initMap" async defer></script>
-</main>

@@ -29,26 +29,47 @@
   max-width:960px;
   margin:0 auto;
   padding:20px 16px 48px;
+  counter-reset: q;
 }
 
-.match-form__container{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:20px;
-}
+
 
 .qblock{
-  margin:18px 0 10px;
-  border:0;
-  padding:0;
+  margin: 22px 0;                 /* 上下にしっかり余白 */
+  padding: 10px 16px 14px;        /* 内側余白をカードっぽく */
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  position: relative;
 }
 
+.qblock + .qblock{
+   margin-top: 40px; 
+}
+
+
+
 .qblock__legend{
-  font-size:18px;
-  line-height:1.5;
-  margin:0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.qblock__legend::before{
+  counter-increment: q;
+  content: "Q" counter(q);
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width: 34px; height: 34px; padding: 0 8px;
+  border-radius: 999px;
+  font-weight: 800; font-size: 14px;
+  background: var(--brand-weak);
+  color: var(--brand);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 .options-grid{
@@ -69,7 +90,7 @@
   display:flex;
   align-items:center;
   gap:10px;
-  padding:14px 12px;
+  padding:10px 12px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:12px;
@@ -165,7 +186,7 @@
 }
 
 .form-errors{
-  margin-top:18px;
+  margin-top:100px;
   padding:14px;
   border:1px solid #ef4444;
   color:#ef4444;

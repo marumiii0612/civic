@@ -2,6 +2,7 @@
   <%= stylesheet_link_tag 'eventall', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 
+<main class="emap">
 <div class="page-bar">
   <h1 class="page-title">団体別検索</h1>
   <%= link_to "イベント一覧に戻る", eventall_tweets_path, class: "btn btn--ghost page-bar__back" %>
@@ -22,11 +23,10 @@
   <% end %>
 <% end %>
 
-<main class="emap">
   <!-- 見出し -->
-  <header class="page-head">
+  <div class="page-head">
     <h3 class="page-head__title">イベント一覧</h3>
-  </header>
+  </div>
 
   <!-- 一覧 -->
   <section class="tweets">

@@ -40,7 +40,7 @@
           <li><%= link_to "市民自治とは", civic_statics_path, class: "link" %></li>
           <li><%= link_to "まちまっち（市民団体マッチング）", new_association_path, class: "link" %></li>
           <li><%= link_to "課題コンパス（市民団体検索）", groupall_statics_path, class: "link" %></li>
-          <li><%= link_to "しみんGO（イベントリスト）", eventall_tweets_path, class: "link" %></li>
+          <li><%= link_to "しみんGO（イベントマップ）", eventall_tweets_path, class: "link" %></li>
           <li><%= link_to "市民団体ログイン", tweets_path %></li>
         </ul>
       </nav>
@@ -66,7 +66,7 @@
             <li><%= link_to "市民自治とは", civic_statics_path, class: "link" %></li>
             <li><%= link_to "まちまっち（市民団体マッチング）", new_association_path %></li>
             <li><%= link_to "課題コンパス（市民団体検索）", groupall_statics_path %></li>
-            <li><%= link_to "しみんGO（イベントリスト）", eventall_tweets_path %></li>
+            <li><%= link_to "しみんGO（イベントマップ）", eventall_tweets_path %></li>
             <li><%= link_to "市民団体ログイン", tweets_path %></li>
           </ul>
         </nav>
@@ -79,33 +79,20 @@
       </div>
     </footer>
 
-    <script>
-      // ヘッダー実寸を body の padding-top に反映（被り防止）
-      function setHeaderPadding() {
-        const header = document.querySelector('header');
-        if (!header) return;
-        const h = Math.ceil(header.getBoundingClientRect().height);
-        document.body.style.paddingTop = h + 'px';
-      }
+    <%= javascript_tag nonce: true do %>
+    function toggleMenu(){
+    const btn = document.querySelector('.hamburger');
+    const nav = document.getElementById('global-nav');
+    const html = document.documentElement;
 
-      // メニュー開閉（ARIA更新・アニメ状態更新）
-      function toggleMenu(force) {
-        const nav = document.getElementById('global-nav');
-        const btn = document.querySelector('.hamburger');
-        const open = typeof force === 'boolean' ? force : !nav.classList.contains('active');
+    const isOpen = btn.classList.toggle('is-open');
+    nav.classList.toggle('active', isOpen);
 
-        nav.classList.toggle('active', open);
-        nav.setAttribute('aria-hidden', String(!open));
-        btn.classList.toggle('is-open', open);
-        btn.setAttribute('aria-expanded', String(open));
-        document.documentElement.classList.toggle('html-lock', open);
-      }
+    // ARIA更新
+    btn.setAttribute('aria-expanded', String(isOpen));
+    nav.setAttribute('aria-hidden', String(!isOpen));
 
-      window.addEventListener('load', setHeaderPadding);
-      window.addEventListener('resize', setHeaderPadding);
-      window.addEventListener('keydown', e => {
-        if (e.key === 'Escape') toggleMenu(false);
-      });
-    </script>
+    
+  <% end %>
   </body>
 </html>

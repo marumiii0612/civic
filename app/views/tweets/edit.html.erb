@@ -3,10 +3,10 @@
 </head>
 
 <main class="event-form-page">
-  <header class="page-head">
+  <div class="page-head">
     <h3 class="page-title">イベント編集</h3>
     <p class="page-desc">必要事項を入力し、開催場所を検索して地図のピンを調整してください。</p>
-  </header>
+  </div>
 
   <section class="card">
     <div class="card__body">
@@ -60,7 +60,7 @@
               ["南","南"], ["海岸","海岸"], ["南湖","南湖"], ["湘南","湘南"],
               ["鶴嶺東","鶴嶺東"], ["鶴嶺西","鶴嶺西"], ["松林","松林"],
               ["小和田","小和田"], ["松浪","松浪"], ["浜須賀","浜須賀"],
-              ["湖北","湖北"], ["小出","小出"], ["茅ケ崎市外","茅ケ崎市外"]
+              ["湘北","湘北"], ["小出","小出"], ["茅ケ崎市外","茅ケ崎市外"]
             ], { include_blank: "選択して下さい" }, class: "select", required: true %>
           </div>
         </div>
@@ -126,11 +126,16 @@
 
   <!-- 地図 -->
   <section class="card">
-    <div class="card__body">
-      <h4 class="card__title">地図（ピンはドラッグで調整できます）</h4>
-      <div id="map" class="map"></div>
-    </div>
-  </section>
+  <div class="card__body">
+    <h4 class="card__title">地図（ピンはドラッグで調整できます）</h4>
+    <div
+      id="map"
+      class="map"
+      data-lat="<%= @tweet.lat %>"
+      data-lng="<%= @tweet.lng %>"
+      data-address="<%= @tweet.address %>"></div>
+  </div>
+</section>
 </main>
 
 <!-- Google Maps（そのまま利用） -->
@@ -138,54 +143,106 @@
 let map, marker, geocoder, inited = false;
 
 function initMap() {
+  const mapEl = document.getElementById('map');
+  if (!mapEl) return;  // 他ページ誤動作防止
+
   geocoder = new google.maps.Geocoder();
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 35.3338, lng: 139.4036 }, // 茅ケ崎市
-    zoom: 15,
+  const CHIGASAKI = { lat: 35.3338, lng: 139.4036 };
+
+  // データ属性から既存値を取得
+  const dlat = parseFloat(mapEl.dataset.lat);
+  const dlng = parseFloat(mapEl.dataset.lng);
+  const daddr = (mapEl.dataset.address || "").trim();
+
+  map = new google.maps.Map(mapEl, {
+    center: CHIGASAKI,
+    zoom: 15
   });
   inited = true;
 
-  // 既にlat/lngが入っている場合はマーカー表示（編集時など）
-  const latField = document.getElementById('lat');
-  const lngField = document.getElementById('lng');
-  if (latField && lngField && latField.value && lngField.value) {
-    const pos = { lat: parseFloat(latField.value), lng: parseFloat(lngField.value) };
+  // 1) lat/lng がある → その位置にピン
+  if (!Number.isNaN(dlat) && !Number.isNaN(dlng)) {
+    const pos = { lat: dlat, lng: dlng };
     placeMarker(pos);
     map.setCenter(pos);
   }
+  // 2) lat/lngは無いが住所がある → 住所から検索してピン
+  else if (daddr) {
+    geocodeAddress(daddr);
+  }
+  // 3) どちらも無い → デフォルト位置（茅ヶ崎）にピンだけ置く
+  else {
+    placeMarker(CHIGASAKI);
+  }
+
+  // フォームの住所欄イベント（Enter / blur）
+  const addrField = document.getElementById('address');
+  if (addrField) {
+    addrField.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        geocodeAddress(addrField.value.trim());
+      }
+    });
+    let t;
+    addrField.addEventListener('blur', () => {
+      clearTimeout(t);
+      t = setTimeout(() => geocodeAddress(addrField.value.trim()), 60);
+    });
+  }
 }
 
-function codeAddress() {
+// 住所→座標：単一ピン更新 & lat/lng反映
+function geocodeAddress(address) {
   if (!inited) return;
-  const inputEl = document.getElementById('address');
-  if (!inputEl || !inputEl.value) { alert('住所を入力してください'); return; }
+  const addr = (address || '').trim();
+  if (!addr) { alert('住所を入力してください'); return; }
 
-  geocoder.geocode({ address: inputEl.value }, function(results, status) {
-    if (status === 'OK' && results[0]) {
+  geocoder.geocode({ address: addr, region: 'JP' }, (results, status) => {
+    if (status === 'OK' && results?.length) {
       const loc = results[0].geometry.location;
       map.setCenter(loc);
       placeMarker(loc);
-      // lat/lng反映
-      document.getElementById('lat').value = loc.lat();
-      document.getElementById('lng').value = loc.lng();
+
+      const latEl = document.getElementById('lat');
+      const lngEl = document.getElementById('lng');
+      if (latEl && lngEl) {
+        latEl.value = loc.lat();
+        lngEl.value = loc.lng();
+      }
+    } else if (status === 'ZERO_RESULTS') {
+      alert('該当する住所が見つかりませんでした。番地や市区町村まで含めてください。');
     } else {
-      alert('該当する結果がありませんでした：' + status);
+      alert('ジオコーディングに失敗しました：' + status);
     }
   });
 }
 
+// 単一ピンを置く（既存ピンがあれば置き換え）＋ドラッグでlat/lng更新
 function placeMarker(latlng) {
   if (marker) marker.setMap(null);
   marker = new google.maps.Marker({
-    map: map,
+    map,
     position: latlng,
     draggable: true
   });
-  // ドラッグ終了でlat/lng更新
-  marker.addListener('dragend', function(ev) {
-    document.getElementById('lat').value = ev.latLng.lat();
-    document.getElementById('lng').value = ev.latLng.lng();
+
+  marker.addListener('dragend', (ev) => {
+    const pos = ev.latLng;
+    const latEl = document.getElementById('lat');
+    const lngEl = document.getElementById('lng');
+    if (latEl && lngEl) {
+      latEl.value = pos.lat();
+      lngEl.value = pos.lng();
+    }
   });
+}
+
+// 既存ボタン onClick="codeAddress()" 用
+function codeAddress() {
+  const addrField = document.getElementById('address');
+  if (!addrField) return;
+  geocodeAddress(addrField.value.trim());
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-NjstGmUv9_Hup6T205DA6XakFEDjmoQ&callback=initMap" async defer></script>

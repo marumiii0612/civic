@@ -3,10 +3,10 @@
 </head>
 
 <main class="event-show">
-  <header class="page-head">
+  <div class="page-head">
     <h3 class="page-title">イベント詳細</h3>
     <p class="page-subtitle"><%= @tweet.event.presence || "イベント名未登録" %></p>
-  </header>
+  </div>
 
   <section class="card">
     <div class="card__body">
@@ -68,9 +68,8 @@
           </div>
         <% end %>
       </dl>
-
       <div class="actions">
-        <%= link_to "イベント一覧に戻る", tweets_path, class: "btn btn--ghost" %>
+        <%= link_to "イベント一覧に戻る", eventall_tweets_path, class: "btn btn--ghost" %>
       </div>
     </div>
   </section>

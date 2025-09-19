@@ -1,29 +1,57 @@
-<h2>団体新規登録</h2>
+<head>
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<div class="auth">
+  <div class="auth__head">
+    <h1 class="auth__title">団体新規登録</h1>
+    <p class="auth__lead">メールアドレスとパスワードを入力して、アカウントを作成してください。</p>
+  </div>
+
+  <!-- Devise のエラーメッセージ -->
   <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :メールアドレス %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <div class="auth-card">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
 
-  <div class="field">
-    <%= f.label :パスワード（半角英数字6文字以上） %>
-    <% if @minimum_password_length %>
-    <em></em>
-    <% end %><br/>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+      <div class="form-row">
+        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "civiclink@gmail.com",
+              required: true,
+              class: "input" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :パスワード（確認用） %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <div class="form-row">
+        <%= f.label :password, "パスワード（半角英数字6文字以上）", class: "form-label" %>
+        <%= f.password_field :password,
+              autocomplete: "new-password",
+              minlength: (@minimum_password_length || 6),
+              required: true,
+              class: "input" %>
+        <% if @minimum_password_length %>
+          <p class="form-hint">※ <%= @minimum_password_length %>文字以上で入力してください。</p>
+        <% end %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "新規登録" %>
-  </div>
-<% end %>
+      <div class="form-row">
+        <%= f.label :password_confirmation, "パスワード（確認用）", class: "form-label" %>
+        <%= f.password_field :password_confirmation,
+              autocomplete: "new-password",
+              required: true,
+              class: "input" %>
+      </div>
 
-<%= render "users/shared/links" %>
+      <div class="form-actions form-actions--right">
+        <%= link_to "トップへ戻る", root_path, class: "btn btn--ghost" %>
+        <%= f.submit "新規登録", class: "btn btn--primary" %>
+      </div>
+    <% end %>
+
+    <div class="auth-links">
+      <%= render "users/shared/links" %>
+    </div>
+  </div>
+</div>

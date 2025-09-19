@@ -13,8 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
-
   # Tweets（標準REST + 追加の一覧系はcollectionで）
   resources :tweets do
     collection do
@@ -29,5 +27,10 @@ Rails.application.routes.draw do
 
   resources :associations
   resources :maps, only: [:index]
+
+devise_for :users, controllers: {
+  registrations: 'users/registrations'
+}
+
 end
 

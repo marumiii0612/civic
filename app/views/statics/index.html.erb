@@ -43,19 +43,7 @@
   </div>
 </main>
 
-<%= link_to "団体新規登録", new_user_registration_path %>
-
-<!-- app/views/statics/index.html.erb -->
-<h1>group.csv 取り込み（statics#index）</h1>
-
-<% if flash[:notice] %><p style="color:green"><%= flash[:notice] %></p><% end %>
-<% if flash[:alert]  %><p style="color:red"><%= flash[:alert]  %></p><% end %>
-
-<p>ファイル未選択なら <code>db/csv/group.csv</code> を読み込みます。</p>
-
-<%= form_with url: upload_statics_path, method: :post, local: true, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "取り込む" %>
-
-<% end %>
+  <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "団体新規登録", new_user_registration_path, class: "btn btn--primary" %>
+  <% end %>
 

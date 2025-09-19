@@ -2,6 +2,7 @@
     <%= stylesheet_link_tag 'ashow', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 
+<main>
 <h1 class="match-result__title">診断結果</h1>
     <p class="match-result__lead">あなたの選択</p>
     <% q1_labels = {
@@ -2866,4 +2867,4 @@
   <%= link_to "もう１度診断する", new_association_path, class: "btn btn--primary" %>
   <%= link_to "市民団体検索へ", groupall_statics_path, class: "btn btn--primary" %>
 </div>
-
+</main>
